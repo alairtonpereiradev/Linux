@@ -1,0 +1,55 @@
+Linux - Fundamentos
+
+Shell Scripting
+# para tornar o script executável utilizar o comando chmo +x nome_do_arquivos
+
+-- Script 1
+# Um script simples que realiza a tarefa de lista arquivos e diretorios de um diretorio de backup.
+# Realizar o backup do conteudo compactando e nomeando com data e hora.
+
+#! /bin/bash
+
+echo "iniciand o backup"
+diretorio_backup="/home/alairton/devops"
+echo "listando diretorios e arquivos"
+ls "$diretorio_backup"
+echo "Arquivos e Diretorio Compactados"
+arquivo_backup="backup_$(date +%Y%m%d_%H%M%S).tar.gz"
+tar -czf "$arquivo_backup" "$diretorio_backup"
+echo "Backup concluído em $arquivo_backup."
+
+
+-- Script 2
+# Este script é uma melhoria script 1
+# Nesse script há uma interação com o usuário.
+# O usuário deve informa o nome do arquivo, ex.: saida.tar.gz.
+# Em seguida o nome dos arquivo a serem compactados;
+# como escutar o compactador de arquivo: ./compactador saida.tar.gz arquivo1 arquivo2 diretorio1
+
+#! /bin/bash
+
+if [ "$#" -lt 2 ]; then
+        echo "O programa $0 requer nome do arquivo e arquivos a serem compactad>
+        exit 1
+fi
+arquivo_saida="$1"
+# pega todos os arquivo e coloca em um array
+arquivos=("${@:2}")
+# compacta os arquivos
+tar -czf "$arquivo_saida" "${arquivos[@]}"
+echo "Compactado com sucesso em $arquivo_saida"
+
+-- Script 3
+# Verificar se o arquivo está no diretorio
+
+#! /bin/bash
+
+arquivos=("$@")
+for  arquivo in "${arquivos[@]}" ; do
+   if [ ! -e "$arquivo" ]; then
+        echo "O Arquivo $arquivo não foi encontrado."
+        exit 1
+   else
+    echo "O Arquivo $arquivo foi encontrado"
+   fi
+done
