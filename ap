@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#: Title	: ap
+#: Date		: 2024-06-29
+#: Author	: Alairton Pereira
+#: Version	: 1.0
+#: Description	: prints, Hello World!
+#: Options	: None
+
+printf "%s\n" "Hello, World!"
